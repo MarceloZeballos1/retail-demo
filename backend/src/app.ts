@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
@@ -7,7 +8,6 @@ import transactionRouter from '@route/transaction.route';
 import supportedAssetRouter from '@route/supportedAssets.route';
 import walletRouter from '@route/wallet.route';
 import 'reflect-metadata';
-import 'dotenv/config';
 import { initializeDataSource } from './data-source';
 import session from 'express-session';
 import passport from '@middleware/passport.middleware';
@@ -27,7 +27,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: 'http://localhost:3001',
+    origin: 'http://localhost:3001  ',
     credentials: true,
   })
 );
@@ -74,7 +74,9 @@ export const webSocketService = new WebSocketService(server);
 initializeDataSource()
   .then(async () => {
     logger.info('Database connection has been initialized!');
-
+    console.log("FIREBLOCKS_API_KEY:", process.env.FIREBLOCKS_API_KEY);
+    console.log("FIREBLOCKS_SECRET_PATH:", process.env.FIREBLOCKS_SECRET_PATH);
+    
     // Run setup script after database initialization
     await setupScript();
 
